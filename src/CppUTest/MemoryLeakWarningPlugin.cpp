@@ -408,6 +408,86 @@ void operator delete[](void* mem, const std::nothrow_t&) UT_NOTHROW
     operator_delete_array_fptr(mem);
 }
 
+// Nothrow new
+
+void *operator new(size_t size, const char *file, int line, std::nothrow_t)
+{
+    try
+    {
+        return operator new(size, file, line);
+    }
+    catch (std::bad_alloc &)
+    {
+        return NULL;
+    }
+}
+
+void *operator new(size_t size, const char *file, size_t line, std::nothrow_t)
+{
+    try
+    {
+        return operator new(size, file, line);
+    }
+    catch (std::bad_alloc &)
+    {
+        return NULL;
+    }
+}
+
+void *operator new[](size_t size, const char *file, int line, std::nothrow_t)
+{
+    try
+    {
+        return operator new(size, file, line);
+    }
+    catch (std::bad_alloc &)
+    {
+        return NULL;
+    }
+}
+
+void *operator new[](size_t size, const char *file, size_t line, std::nothrow_t)
+{
+    try
+    {
+        return operator new(size, file, line);
+    }
+    catch (std::bad_alloc &)
+    {
+        return NULL;
+    }
+}
+
+// Placement new
+
+void *operator new(size_t size, const char *file, int line, void *ptr)
+{
+    (void)file;
+    (void)line;
+    return operator new(size, ptr);
+}
+
+void *operator new(size_t size, const char *file, size_t line, void *ptr)
+{
+    (void)file;
+    (void)line;
+    return operator new(size, ptr);
+}
+
+void *operator new[](size_t size, const char *file, int line, void *ptr)
+{
+    (void)file;
+    (void)line;
+    return operator new(size, ptr);
+}
+
+void *operator new[](size_t size, const char *file, size_t line, void *ptr)
+{
+    (void)file;
+    (void)line;
+    return operator new(size, ptr);
+}
+
 #else
 
 /* Have a similar method. This avoid unused operator_new_nothrow_fptr warning */

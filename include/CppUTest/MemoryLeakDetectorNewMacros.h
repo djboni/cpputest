@@ -63,6 +63,22 @@
     void* operator new(size_t size) UT_THROW(std::bad_alloc);
     void* operator new[](size_t size) UT_THROW(std::bad_alloc);
 
+    // Nothrow new
+    void *operator new(size_t size, const char *file, int line, std::nothrow_t);
+    void *operator new(size_t size, const char *file, size_t line, std::nothrow_t);
+    void *operator new[](size_t size, const char *file, int line, std::nothrow_t);
+    void *operator new[](size_t size, const char *file, size_t line, std::nothrow_t);
+    void *operator new(size_t size, std::nothrow_t);
+    void *operator new[](size_t size, std::nothrow_t);
+
+    // Placement new
+    void *operator new(size_t size, const char *file, int line, void *);
+    void *operator new(size_t size, const char *file, size_t line, void *);
+    void *operator new[](size_t size, const char *file, int line, void *);
+    void *operator new[](size_t size, const char *file, size_t line, void *);
+    void *operator new(size_t size, void *);
+    void *operator new[](size_t size, void *);
+
     void operator delete(void* mem, const char* file, int line) UT_NOTHROW;
     void operator delete(void* mem, const char* file, size_t line) UT_NOTHROW;
     void operator delete[](void* mem, const char* file, int line) UT_NOTHROW;
@@ -84,7 +100,7 @@
  #endif
 #endif
 
-#define new new(__FILE__, __LINE__)
+#define new(...) new (__FILE__, __LINE__, __VA_ARGS__)
 
 #ifdef __clang__
  #pragma clang diagnostic pop
